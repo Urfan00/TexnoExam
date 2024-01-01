@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from services.mixins import DateMixin
 from services.uploader import Uploader
 from datetime import date
 
@@ -7,7 +8,6 @@ from datetime import date
 
 class Account(AbstractUser):
     username = models.CharField(max_length=7, unique=True)
-    password = models.CharField(max_length=255)
     FIN = models.CharField(max_length=7, unique=True)
     image = models.ImageField(upload_to=Uploader.user_image, null=True, blank=True, max_length=255)
     email = models.EmailField(max_length=254, unique=True)
@@ -27,6 +27,31 @@ class Account(AbstractUser):
             return age
         return None
 
+    def save(self, *args, **kwargs):
+        # Set the password to be equal to the FIN code when the instance is created
+        if not self.pk:  # Check if the instance is being created (not updated)
+            self.set_password(self.FIN)
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Account'
         verbose_name_plural = 'Accounts'
+
+
+class StudentResult(DateMixin):
+    student = models.ForeignKey(Account, on_delete=models.CASCADE)
+    point_1 = models.PositiveIntegerField(default=0)
+    point_2 = models.PositiveIntegerField(default=0)
+    point_3 = models.PositiveIntegerField(default=0)
+    total_point = models.PositiveIntegerField()
+
+    def save(self, *args, **kwargs):
+        self.total_point = self.point_1 + self.point_2 + self.point_3
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.student.get_full_name()} result"
+
+    class Meta:
+        verbose_name = 'Student Result'
+        verbose_name_plural = 'Student Result'

@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import Account
+from .models import Account, StudentResult
+from import_export.admin import ImportExportModelAdmin
 
 
-class AccountAdmin(BaseUserAdmin):
+
+class AccountAdmin(ImportExportModelAdmin, BaseUserAdmin):
     list_display = ("username", "first_name", "last_name", 'FIN', "email", "number", "image", "birthday", 'first_time_login', 'is_delete', "is_active", "is_superuser")
     list_filter = ("is_active", 'is_staff', 'is_delete', "is_superuser", 'first_time_login')
     fieldsets = (
@@ -25,4 +27,12 @@ class AccountAdmin(BaseUserAdmin):
     )
     search_fields = ("username", "first_name", "last_name", 'FIN', "email", "number")
 
+
+class StudentResultAdmin(ImportExportModelAdmin):
+    list_display = ['id', 'student', 'point_1', 'point_2', 'point_3', 'total_point', 'created_at', 'updated_at']
+    list_display_links = ['id', 'student']
+    search_fields = ['student__first_name', 'student__last_name', 'student__email']
+
+
 admin.site.register(Account, AccountAdmin)
+admin.site.register(StudentResult, StudentResultAdmin)

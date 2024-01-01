@@ -41,8 +41,10 @@ INSTALLED_APPS = [
 
     'Account',
     'Core',
+    'Exam',
 
     'ckeditor',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +155,7 @@ EMAIL_HOST_USER = 'urfanagazade1@gmail.com'
 EMAIL_HOST_PASSWORD = 'vvcftefppbseouuf'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+
+from import_export.formats.base_formats import CSV, XLSX
+
+IMPORT_EXPORT_FORMATS = [CSV, XLSX]
