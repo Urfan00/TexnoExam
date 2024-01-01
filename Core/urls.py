@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import index
+from .views import QuizView, RuleView
 
 
 
 urlpatterns = [
-    path('', index, name='index')
+    path('', RuleView.as_view(), name='index'),
+    path('quiz/', QuizView.as_view(), name='quiz')
 ]

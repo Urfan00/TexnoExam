@@ -21,315 +21,146 @@
             </div>
 
             <div class="py-30 px-30">
-              <div class="border-light overflow-hidden rounded-8">
+              <form method="post">
+                {% csrf_token %}
 
-                <div class="py-40 px-40 bg-dark-5">
-                  <div class="d-flex justify-between">
-                    <h4 class="text-18 lh-1 fw-500 text-white">Question 1</h4>
-                    <div class="d-flex x-gap-50">
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-flag mr-10"></div>
-                        <div>Flag Question</div>
+                {% for question in student_questions.point_1_question.all %}
+
+                  <div class="border-light overflow-hidden rounded-8 mb-30">
+
+                    <div class="py-40 px-40 bg-dark-5">
+                      <div class="d-flex justify-between">
+                        <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter }}</h4>
+                        <div class="d-flex x-gap-50">
+                          <div class="d-flex items-center text-white">
+                            <div class="icon-flag mr-10"></div>
+                            <div>Flag Question</div>
+                          </div>
+                        </div>
                       </div>
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-edit mr-10"></div>
-                        <div>Edit Question</div>
+
+                      <div class="d-flex pt-15">
+                        <div class="text-white">{{ question.point }} ballıq</div>
+                        <div class="text-white ml-50">{{ question.course_topic.topic_title|capfirst }}</div>
                       </div>
+
+                      <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                    </div>
+
+                    <div class="px-40 py-40">
+
+                      {% for answer in question.question_answer.all %}
+
+                        <div class="form-radio d-flex items-center mt-20">
+                          <div class="radio">
+                            <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                            <div class="radio__mark">
+                              <div class="radio__icon"></div>
+                            </div>
+                          </div>
+                          <div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div>
+                        </div>
+
+                      {% endfor %}
+
                     </div>
                   </div>
 
-                  <div class="d-flex pt-15">
-                    <div class="text-white">Not yet answered</div>
-                    <div class="text-white ml-50">Marked out of 1.00</div>
+                {% endfor %}
+
+                {% for question in student_questions.point_2_question.all %}
+
+                  <div class="border-light overflow-hidden rounded-8 mb-30">
+
+                    <div class="py-40 px-40 bg-dark-5">
+                      <div class="d-flex justify-between">
+                        <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter0|add:4 }}</h4>
+                        <div class="d-flex x-gap-50">
+                          <div class="d-flex items-center text-white">
+                            <div class="icon-flag mr-10"></div>
+                            <div>Flag Question</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex pt-15">
+                        <div class="text-white">{{ question.point }} ballıq</div>
+                        <div class="text-white ml-50">{{ question.course_topic.topic_title|capfirst }}</div>
+                      </div>
+
+                      <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                    </div>
+
+                    <div class="px-40 py-40">
+
+                      {% for answer in question.question_answer.all %}
+
+                        <div class="form-radio d-flex items-center mt-20">
+                          <div class="radio">
+                            <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                            <div class="radio__mark">
+                              <div class="radio__icon"></div>
+                            </div>
+                          </div>
+                          <div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div>
+                        </div>
+
+                      {% endfor %}
+
+                    </div>
                   </div>
 
-                  <div class="text-20 lh-1 text-white mt-15">You are watching the TV news and see this appear on the screen:</div>
+                {% endfor %}
+
+                {% for question in student_questions.point_3_question.all %}
+
+                  <div class="border-light overflow-hidden rounded-8 mb-30">
+
+                    <div class="py-40 px-40 bg-dark-5">
+                      <div class="d-flex justify-between">
+                        <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter0|add:8 }}</h4>
+                        <div class="d-flex x-gap-50">
+                          <div class="d-flex items-center text-white">
+                            <div class="icon-flag mr-10"></div>
+                            <div>Flag Question</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex pt-15">
+                        <div class="text-white">{{ question.point }} ballıq</div>
+                        <div class="text-white ml-50">{{ question.course_topic.topic_title|capfirst }}</div>
+                      </div>
+
+                      <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                    </div>
+
+                    <div class="px-40 py-40">
+
+                      {% for answer in question.question_answer.all %}
+
+                        <div class="form-radio d-flex items-center mt-20">
+                          <div class="radio">
+                            <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                            <div class="radio__mark">
+                              <div class="radio__icon"></div>
+                            </div>
+                          </div>
+                          <div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div>
+                        </div>
+
+                      {% endfor %}
+
+                    </div>
+                  </div>
+
+                {% endfor %}
+
+                <div class="d-flex justify-end">
+                  <button class="button -md -dark-1 text-white -dark-button-white mt-40">Bitir</button>
                 </div>
 
-
-                <div class="px-40 py-40">
-                  <div class="mb-30">Select one:</div>
-
-                  <div class="form-radio d-flex items-center ">
-                    <div class="radio">
-                      <input type="radio">
-                      <div class="radio__mark">
-                        <div class="radio__icon"></div>
-                      </div>
-                    </div>
-                    <div class="fw-500 ml-12">a. A tweet</div>
-                  </div>
-
-
-                  <div class="form-radio d-flex items-center mt-20">
-                    <div class="radio">
-                      <input type="radio" checked>
-                      <div class="radio__mark">
-                        <div class="radio__icon"></div>
-                      </div>
-                    </div>
-                    <div class="fw-500 ml-12">b. A hashtag</div>
-                  </div>
-
-
-                  <div class="form-radio d-flex items-center mt-20">
-                    <div class="radio">
-                      <input type="radio">
-                      <div class="radio__mark">
-                        <div class="radio__icon"></div>
-                      </div>
-                    </div>
-                    <div class="fw-500 ml-12">c. A tag</div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="border-light overflow-hidden rounded-8 mt-30">
-
-                <div class="py-40 px-40 bg-dark-5">
-                  <div class="d-flex justify-between">
-                    <h4 class="text-18 lh-1 fw-500 text-white">Question 2</h4>
-                    <div class="d-flex x-gap-50">
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-flag mr-10"></div>
-                        <div>Flag Question</div>
-                      </div>
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-edit mr-10"></div>
-                        <div>Edit Question</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="d-flex pt-15">
-                    <div class="text-white">Not yet answered</div>
-                    <div class="text-white ml-50">Marked out of 1.00</div>
-                  </div>
-
-                  <div class="text-20 lh-1 text-white mt-15">Complete the sentences:</div>
-                </div>
-
-
-                <form class="contact-form px-40 py-40">
-                  <div class="d-flex items-center">
-                    <div>If I want to send short messages of under 140 characters, I use</div>
-
-                    <div class="col-auto ml-12">
-
-                      <input type="text" placeholder="Text...">
-                    </div>
-
-                  </div>
-                  <div class="d-flex items-center mt-20">
-                    <div>If I want to quickly share pictures I can use</div>
-
-                    <div class="col-auto ml-12">
-
-                      <input type="text" placeholder="Text...">
-                    </div>
-
-                  </div>
-                  <div class="d-flex items-center mt-20">
-                    <div>If I want to do a videochat on my iPhone I can use</div>
-
-                    <div class="col-auto ml-12">
-
-                      <input type="text" placeholder="Text...">
-                    </div>
-
-                  </div>
-
-                  <div class="mt-40">
-                    <div class="d-flex x-gap-20 y-gap-10">
-
-                      <div><button class="button -light-3 -dark-button-dark-2 -dark-text-white px-25 py-15 rounded-8">Twitter</button></div>
-
-                      <div><button class="button -light-3 -dark-button-dark-2 -dark-text-white px-25 py-15 rounded-8">Instagram</button></div>
-
-                      <div><button class="button -light-3 -dark-button-dark-2 -dark-text-white px-25 py-15 rounded-8">Facetime</button></div>
-
-                      <div><button class="button -light-3 -dark-button-dark-2 -dark-text-white px-25 py-15 rounded-8">Pinterest </button></div>
-
-                      <div><button class="button -light-3 -dark-button-dark-2 -dark-text-white px-25 py-15 rounded-8">Youtube</button></div>
-
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div class="border-light overflow-hidden rounded-8 mt-30">
-
-                <div class="py-40 px-40 bg-dark-5">
-                  <div class="d-flex justify-between">
-                    <h4 class="text-18 lh-1 fw-500 text-white">Question 3</h4>
-                    <div class="d-flex x-gap-50">
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-flag mr-10"></div>
-                        <div>Flag Question</div>
-                      </div>
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-edit mr-10"></div>
-                        <div>Edit Question</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="d-flex pt-15">
-                    <div class="text-white">Not yet answered</div>
-                    <div class="text-white ml-50">Marked out of 1.00</div>
-                  </div>
-
-                  <div class="text-20 lh-1 text-white mt-15">A short message on Twitter is called a ?????</div>
-                </div>
-
-
-                <form class="contact-form px-40 py-40">
-                  <div class="d-flex items-center">
-                    <div>Answer</div>
-
-                    <div class="col-lg-7 ml-12">
-
-                      <input type="text" placeholder="Text...">
-                    </div>
-
-                  </div>
-                </form>
-              </div>
-
-              <div class="border-light overflow-hidden rounded-8 mt-30">
-
-                <div class="py-40 px-40 bg-dark-5">
-                  <div class="d-flex justify-between">
-                    <h4 class="text-18 lh-1 fw-500 text-white">Question 4</h4>
-                    <div class="d-flex x-gap-50">
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-flag mr-10"></div>
-                        <div>Flag Question</div>
-                      </div>
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-edit mr-10"></div>
-                        <div>Edit Question</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="d-flex pt-15">
-                    <div class="text-white">Not yet answered</div>
-                    <div class="text-white ml-50">Marked out of 1.00</div>
-                  </div>
-
-                  <div class="text-20 lh-1 text-white mt-15">Match the icons to their sites.</div>
-                </div>
-
-
-                <form class="contact-form px-40 py-40">
-                  <div class="d-flex items-center">
-                    <div>Answer</div>
-
-                    <div class="col-lg-7 ml-12">
-
-                      <input type="text" placeholder="Text...">
-                    </div>
-
-                  </div>
-                </form>
-              </div>
-
-              <div class="border-light overflow-hidden rounded-8 mt-30">
-
-                <div class="py-40 px-40 bg-dark-5">
-                  <div class="d-flex justify-between">
-                    <h4 class="text-18 lh-1 fw-500 text-white">Question 5</h4>
-                    <div class="d-flex x-gap-50">
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-flag mr-10"></div>
-                        <div>Flag Question</div>
-                      </div>
-                      <div class="d-flex items-center text-white">
-                        <div class="icon-edit mr-10"></div>
-                        <div>Edit Question</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="d-flex pt-15">
-                    <div class="text-white">Not yet answered</div>
-                    <div class="text-white ml-50">Marked out of 1.00</div>
-                  </div>
-
-                  <div class="text-20 lh-1 text-white mt-15">Facebook was founded in 2005.</div>
-                </div>
-
-
-                <div class="px-40 py-40">
-                  <div class="mb-20">Select one:</div>
-
-                  <div class="form-radio d-flex items-center ">
-                    <div class="radio">
-                      <input type="radio">
-                      <div class="radio__mark">
-                        <div class="radio__icon"></div>
-                      </div>
-                    </div>
-                    <div class="fw-500 ml-12">True</div>
-                  </div>
-
-
-                  <div class="form-radio d-flex items-center mt-20">
-                    <div class="radio">
-                      <input type="radio">
-                      <div class="radio__mark">
-                        <div class="radio__icon"></div>
-                      </div>
-                    </div>
-                    <div class="fw-500 ml-12">False</div>
-                  </div>
-
-                  <a href="#" class="d-block fw-500 text-purple-1 underline mt-20">Clear my choice</a>
-                </div>
-              </div>
-
-              <div class="d-flex justify-end">
-                <button class="button -md -dark-1 text-white -dark-button-white mt-40">Finish</button>
-              </div>
-
-              <div class="d-flex justify-between items-center mt-40">
-
-                <a href="" class="button -icon -purple-3 h-50 text-purple-1">
-                  Forum Netiquette
-                  <i class="icon-arrow-top-right text-13 ml-10"></i>
-                </a>
-
-
-                <div class="dropdown js-dropdown js-category-active">
-                  <div class="dropdown__button d-flex items-center text-14 bg-white -dark-bg-dark-2 -dark-border-white-10 border-light rounded-8 px-20 py-10 " data-el-toggle=".js-category-toggle" data-el-toggle-active=".js-category-active">
-                    <span class="js-dropdown-title">Jump to...</span>
-                    <i class="icon text-9 ml-40 icon-chevron-down"></i>
-                  </div>
-
-                  <div class="toggle-element -dropdown -dark-bg-dark-2 -dark-border-white-10 js-click-dropdown js-category-toggle">
-                    <div class="text-14 y-gap-15 js-dropdown-list">
-
-                      <div><a href="#" class="d-block js-dropdown-link">Animation</a></div>
-
-                      <div><a href="#" class="d-block js-dropdown-link">Design</a></div>
-
-                      <div><a href="#" class="d-block js-dropdown-link">Illustration</a></div>
-
-                      <div><a href="#" class="d-block js-dropdown-link">Business</a></div>
-
-                    </div>
-                  </div>
-                </div>
-
-
-                <a href="" class="button -icon -purple-3 h-50 text-purple-1">
-                  Share Examples Of Digital
-                  <i class="icon-arrow-top-right text-13 ml-10"></i>
-                </a>
-
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -397,7 +228,6 @@
 
                 </div>
 
-                <button class="button -md -dark-1 text-white -dark-button-white mt-30">Finish</button>
               </div>
             </div>
           </div>

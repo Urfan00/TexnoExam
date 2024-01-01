@@ -6,7 +6,7 @@ from services.mixins import DateMixin
 
 
 class Group(DateMixin):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_group')
     course_topic = models.ManyToManyField(CourseTopic, blank=True)
     is_active = models.BooleanField(default=True)
@@ -51,11 +51,18 @@ class RandomQuestion(DateMixin):
 class StudentAnswer(DateMixin):
     student = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='student_answer_question')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='student_question')
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, )
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='student_answer', null=True, blank=True)
     is_correct = models.BooleanField()
 
     def __str__(self):
         return f"{self.student.get_full_name()} answer"
+
+    def save(self, *args, **kwargs):
+        if self.answer and self.answer.is_correct:
+            self.is_correct = True
+        else:
+            self.is_correct = False
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Student Answer'
