@@ -26,7 +26,7 @@
 
                 {% for question in student_questions.point_1_question.all %}
 
-                  <div class="border-light overflow-hidden rounded-8 mb-30">
+                  <div id="sual_{{ forloop.counter }}" class="border-light overflow-hidden rounded-8 mb-30">
 
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
@@ -70,7 +70,7 @@
 
                 {% for question in student_questions.point_2_question.all %}
 
-                  <div class="border-light overflow-hidden rounded-8 mb-30">
+                  <div id="sual_{{ forloop.counter0|add:4 }}" class="border-light overflow-hidden rounded-8 mb-30">
 
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
@@ -114,7 +114,7 @@
 
                 {% for question in student_questions.point_3_question.all %}
 
-                  <div class="border-light overflow-hidden rounded-8 mb-30">
+                  <div id="sual_{{ forloop.counter0|add:8 }}" class="border-light overflow-hidden rounded-8 mb-30">
 
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
@@ -191,38 +191,62 @@
                 <div class="row x-gap-10 y-gap-10">
 
                   <div class="col-auto">
-                    <a href="#" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                    <a href="#sual_1" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
                       <div class="text-15 lh-1 fw-500">1</div>
                     </a>
                   </div>
 
                   <div class="col-auto">
-                    <a href="#" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                    <a href="#sual_2" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
                       <div class="text-15 lh-1 fw-500">2</div>
                     </a>
                   </div>
 
                   <div class="col-auto">
-                    <a href="#" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                    <a href="#sual_3" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
                       <div class="text-15 lh-1 fw-500">3</div>
                     </a>
                   </div>
 
                   <div class="col-auto">
-                    <a href="#" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                    <a href="#sual_4" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
                       <div class="text-15 lh-1 fw-500">4</div>
                     </a>
                   </div>
 
                   <div class="col-auto">
-                    <a href="#" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                    <a href="#sual_5" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
                       <div class="text-15 lh-1 fw-500">5</div>
                     </a>
                   </div>
 
                   <div class="col-auto">
-                    <a href="#" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                    <a href="#sual_6" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
                       <div class="text-15 lh-1 fw-500">6</div>
+                    </a>
+                  </div>
+
+                  <div class="col-auto">
+                    <a href="#sual_7" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                      <div class="text-15 lh-1 fw-500">7</div>
+                    </a>
+                  </div>
+
+                  <div class="col-auto">
+                    <a href="#sual_8" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                      <div class="text-15 lh-1 fw-500">8</div>
+                    </a>
+                  </div>
+
+                  <div class="col-auto">
+                    <a href="#sual_9" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                      <div class="text-15 lh-1 fw-500">9</div>
+                    </a>
+                  </div>
+
+                  <div class="col-auto">
+                    <a href="#sual_10" class="button -single-icon -light-3 text-dark-1 size-35 rounded-8">
+                      <div class="text-15 lh-1 fw-500">10</div>
                     </a>
                   </div>
 
