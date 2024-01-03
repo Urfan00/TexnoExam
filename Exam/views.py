@@ -1,12 +1,22 @@
 from django.shortcuts import redirect, render
 from django.views.generic import ListView
-from Account.models import Account
+from Account.models import Account, StudentResult
 from Core.models import AccountGroup, RandomQuestion, StudentAnswer
 from .models import Answer, Question
+from django.db.models import F
+from datetime import datetime
 
 
+class StatusCheckMixin:
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if not user.status:
+            # Redirect to a page indicating that the account is inactive
+            return redirect('warning')
+        return super().dispatch(request, *args, **kwargs)
 
-class RuleView(ListView):
+
+class RuleView(StatusCheckMixin, ListView):
     model = Account
     template_name = 'quiz-rule.html'
 
@@ -33,8 +43,7 @@ class RuleView(ListView):
         return context
 
 
-
-class QuizView(ListView):
+class QuizView(StatusCheckMixin, ListView):
     model = RandomQuestion
     template_name = 'dshb-quiz.html'
 
@@ -45,7 +54,7 @@ class QuizView(ListView):
 
     def post(self, request, *args, **kwargs):
         # Process the submitted form data and save student answers
-        student_random_questions = RandomQuestion.objects.filter(student=request.user, status=True).first()
+        student_random_questions = RandomQuestion.objects.filter(student=self.request.user, status=True).first()
 
         for question in student_random_questions.point_1_question.all():
             answer_id = request.POST.get(f'question_{question.id}')
@@ -71,4 +80,43 @@ class QuizView(ListView):
             else:
                 StudentAnswer.objects.create(student=request.user, question=question)
 
-        return redirect('index')
+        # Calculate points
+        student_answers = list(StudentAnswer.objects.filter(student=self.request.user).order_by('-created_at')[:10])
+
+        point_1_points = sum(1 for answer in student_answers if answer.question.point == 1 and answer.is_correct)
+        point_2_points = sum(1 for answer in student_answers if answer.question.point == 2 and answer.is_correct)
+        point_3_points = sum(1 for answer in student_answers if answer.question.point == 3 and answer.is_correct)
+
+
+        account_group = AccountGroup.objects.filter(student=self.request.user, is_active=True).first()
+        topics = account_group.group.course_topic.all()
+
+        # Create or update StudentResult
+        student_result, created = StudentResult.objects.get_or_create(student=self.request.user, status=True)
+        student_result.point_1 = point_1_points
+        student_result.point_2 = point_2_points * 2
+        student_result.point_3 = point_3_points * 3
+        student_result.exam_topics.set(topics)
+        student_result.save()
+
+        student = Account.objects.get(id=self.request.user.pk)
+        student.status = False
+        student.save()
+
+        return redirect('exam_result')
+
+
+class ExamResultView(ListView):
+    model = StudentResult
+    template_name = 'quiz-result.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["result"] = StudentResult.objects.filter(student=self.request.user, status=True).annotate(
+            percent_point = F('total_point') * 5
+        ).first()
+        return context
+
+
+def warning(request):
+    return render(request, 'warning.html')

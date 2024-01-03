@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from Exam.models import CourseTopic
 from services.mixins import DateMixin
 from services.uploader import Uploader
 from datetime import date
@@ -15,6 +16,7 @@ class Account(AbstractUser):
     number = models.CharField(max_length=20, null=True, blank=True)
     first_time_login = models.BooleanField(default=True)
     is_delete = models.BooleanField(default=False)
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.get_full_name()
@@ -44,6 +46,8 @@ class StudentResult(DateMixin):
     point_2 = models.PositiveIntegerField(default=0)
     point_3 = models.PositiveIntegerField(default=0)
     total_point = models.PositiveIntegerField()
+    status = models.BooleanField(default=True)
+    exam_topics = models.ManyToManyField(CourseTopic)
 
     def save(self, *args, **kwargs):
         self.total_point = self.point_1 + self.point_2 + self.point_3

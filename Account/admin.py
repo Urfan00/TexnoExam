@@ -6,11 +6,11 @@ from import_export.admin import ImportExportModelAdmin
 
 
 class AccountAdmin(ImportExportModelAdmin, BaseUserAdmin):
-    list_display = ("username", "first_name", "last_name", 'FIN', "email", "number", "image", "birthday", 'first_time_login', 'is_delete', "is_active", "is_superuser")
-    list_filter = ("is_active", 'is_staff', 'is_delete', "is_superuser", 'first_time_login')
+    list_display = ("username", "first_name", "last_name", 'FIN', "email", "number", "image", "birthday", 'status', 'first_time_login', 'is_delete', "is_active", "is_superuser")
+    list_filter = ("is_active", 'is_staff', 'status', 'is_delete', "is_superuser", 'first_time_login')
     fieldsets = (
         ("Credential", {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'number', 'image', 'birthday', 'first_time_login', 'is_delete')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'number', 'image', 'birthday', 'status', 'first_time_login', 'is_delete')}),
         ('Permissions', {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
@@ -29,9 +29,10 @@ class AccountAdmin(ImportExportModelAdmin, BaseUserAdmin):
 
 
 class StudentResultAdmin(ImportExportModelAdmin):
-    list_display = ['id', 'student', 'point_1', 'point_2', 'point_3', 'total_point', 'created_at', 'updated_at']
+    list_display = ['id', 'student', 'point_1', 'point_2', 'point_3', 'total_point', 'status', 'created_at', 'updated_at']
     list_display_links = ['id', 'student']
     search_fields = ['student__first_name', 'student__last_name', 'student__email']
+    list_filter = ['status']
 
 
 admin.site.register(Account, AccountAdmin)

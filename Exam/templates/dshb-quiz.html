@@ -4,14 +4,6 @@
 
   <div class="dashboard__main">
     <div class="dashboard__content bg-light-4">
-      <div class="row pb-50 mb-10">
-        <div class="col-auto">
-
-          <h1 class="text-30 lh-12 fw-700">Quiz</h1>
-
-        </div>
-      </div>
-
 
       <div class="row y-gap-30">
         <div class="col-xl-9">
@@ -31,20 +23,23 @@
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
                         <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter }}</h4>
-                        <div class="d-flex x-gap-50">
+                        {% comment %} <div class="d-flex x-gap-50">
                           <div class="d-flex items-center text-white">
                             <div class="icon-flag mr-10"></div>
                             <div>Flag Question</div>
                           </div>
-                        </div>
+                        </div> {% endcomment %}
                       </div>
 
                       <div class="d-flex pt-15">
-                        <div class="text-white">{{ question.point }} ballıq</div>
-                        <div class="text-white ml-50">{{ question.course_topic.topic_title|capfirst }}</div>
+                        <div class="text-white">{{ question.course_topic.topic_title|capfirst }}</div>
+                        <div class="text-white ml-50">{{ question.point }} ballıq</div>
                       </div>
 
                       <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                      {% if question.question_image %}
+                        <img class="mt-10" src="{{ question.question_image.url }}" alt="">
+                      {% endif %}
                     </div>
 
                     <div class="px-40 py-40">
@@ -52,13 +47,14 @@
                       {% for answer in question.question_answer.all %}
 
                         <div class="form-radio d-flex items-center mt-20">
+                          
                           <div class="radio">
-                            <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                            <input id="{{ question.id }}_{{ forloop.counter }}" type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
                             <div class="radio__mark">
                               <div class="radio__icon"></div>
                             </div>
                           </div>
-                          <div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div>
+                          <label for="{{ question.id }}_{{ forloop.counter }}"><div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div></label>
                         </div>
 
                       {% endfor %}
@@ -75,12 +71,12 @@
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
                         <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter0|add:4 }}</h4>
-                        <div class="d-flex x-gap-50">
+                        {% comment %} <div class="d-flex x-gap-50">
                           <div class="d-flex items-center text-white">
                             <div class="icon-flag mr-10"></div>
                             <div>Flag Question</div>
                           </div>
-                        </div>
+                        </div> {% endcomment %}
                       </div>
 
                       <div class="d-flex pt-15">
@@ -97,12 +93,12 @@
 
                         <div class="form-radio d-flex items-center mt-20">
                           <div class="radio">
-                            <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                            <input id="{{ question.id }}_{{ forloop.counter }}" type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
                             <div class="radio__mark">
                               <div class="radio__icon"></div>
                             </div>
                           </div>
-                          <div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div>
+                          <label for="{{ question.id }}_{{ forloop.counter }}"><div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div></label>
                         </div>
 
                       {% endfor %}
@@ -119,12 +115,12 @@
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
                         <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter0|add:8 }}</h4>
-                        <div class="d-flex x-gap-50">
+                        {% comment %} <div class="d-flex x-gap-50">
                           <div class="d-flex items-center text-white">
                             <div class="icon-flag mr-10"></div>
                             <div>Flag Question</div>
                           </div>
-                        </div>
+                        </div> {% endcomment %}
                       </div>
 
                       <div class="d-flex pt-15">
@@ -141,12 +137,12 @@
 
                         <div class="form-radio d-flex items-center mt-20">
                           <div class="radio">
-                            <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                            <input id="{{ question.id }}_{{ forloop.counter }}" type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
                             <div class="radio__mark">
                               <div class="radio__icon"></div>
                             </div>
                           </div>
-                          <div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div>
+                          <label for="{{ question.id }}_{{ forloop.counter }}"><div class="fw-500 ml-12">{{ answer.answer|capfirst }}</div></label>
                         </div>
 
                       {% endfor %}
@@ -165,7 +161,22 @@
           </div>
         </div>
 
-        <div class="col-xl-3 col-lg-3">
+
+        <style>
+          .abc {
+            position: fixed;
+            right: 30px;
+            width: 300px;
+          }
+          @media only screen and (max-width: 1400px) {
+            .abc {
+              position: static;
+              width: 100%;
+            }
+          }
+        </style>
+
+        <div class="col-xl-3 col-lg-3 abc">
           <div class="row y-gap-30">
             <div class="col-12">
               <div class="pt-20 pb-30 px-30 rounded-16 bg-white -dark-bg-dark-1 shadow-4">

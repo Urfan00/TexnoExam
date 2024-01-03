@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def allresult(request):
+    return render(request, 'dshb-participants.html')
