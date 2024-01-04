@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import allresult
+from .views import ExamStart, SaveExamView
 
 
 
 urlpatterns = [
-    path('allresult/', allresult, name='allresult'),
+    path('exam_start/', ExamStart.as_view(), name='exam_start'),
+    path('save_exam/', SaveExamView.as_view(), name='save_exam'),
+
 ]

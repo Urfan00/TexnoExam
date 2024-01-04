@@ -10,6 +10,7 @@ class Group(DateMixin):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_group')
     course_topic = models.ManyToManyField(CourseTopic, blank=True)
     is_active = models.BooleanField(default=True)
+    exam_durations = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name

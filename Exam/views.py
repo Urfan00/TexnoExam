@@ -4,7 +4,7 @@ from Account.models import Account, StudentResult
 from Core.models import AccountGroup, RandomQuestion, StudentAnswer
 from .models import Answer, Question
 from django.db.models import F
-from datetime import datetime
+
 
 
 class StatusCheckMixin:

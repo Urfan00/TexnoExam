@@ -4,7 +4,7 @@ from import_export.admin import ImportExportModelAdmin
 
 
 class GroupAdmin(ImportExportModelAdmin):
-    list_display = ['id', 'name', 'course', 'is_active', 'created_at', 'updated_at']
+    list_display = ['id', 'name', 'course', 'exam_durations', 'is_active', 'created_at', 'updated_at']
     list_display_links = ['id', 'name']
     list_filter = ['is_active']
     search_fields = ['name', 'course__title']
