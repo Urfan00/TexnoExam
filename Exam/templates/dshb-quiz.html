@@ -85,6 +85,9 @@
                       </div>
 
                       <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                      {% if question.question_image %}
+                        <img class="mt-10" src="{{ question.question_image.url }}" alt="">
+                      {% endif %}
                     </div>
 
                     <div class="px-40 py-40">
@@ -129,6 +132,9 @@
                       </div>
 
                       <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                      {% if question.question_image %}
+                        <img class="mt-10" src="{{ question.question_image.url }}" alt="">
+                      {% endif %}
                     </div>
 
                     <div class="px-40 py-40">

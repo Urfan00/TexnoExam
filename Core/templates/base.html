@@ -85,9 +85,9 @@
 
                 <div class="d-flex items-center sm:d-none">
                   <div class="relative">
-                    <button class="js-darkmode-toggle text-light-1 d-flex items-center justify-center size-50 rounded-16 -hover-dshb-header-light">
+                    {% comment %} <button class="js-darkmode-toggle text-light-1 d-flex items-center justify-center size-50 rounded-16 -hover-dshb-header-light">
                       <i class="text-24 icon icon-night"></i>
-                    </button>
+                    </button> {% endcomment %}
                   </div>
 
                   <div class="relative">
@@ -97,9 +97,8 @@
                   </div>
                 </div>
 
-                <div class="relative d-flex items-center ml-10">
+                {% comment %} <div class="relative d-flex items-center ml-10">
                   <a href="#" data-el-toggle=".js-profile-toggle">
-                    {% comment %} <img class="size-50" src="" alt="image"> {% endcomment %}
                     <img class="size-50" src="{% if superadmin_avatar %}{{ superadmin_avatar }}{% else %}{% static '' %}img/misc/user-profile.png{% endif %}" alt="image" style="border-radius: 50%;">
                   </a>
 
@@ -110,7 +109,7 @@
                         <div class="sidebar -dashboard">
 
                           <div class="sidebar__item -is-active -dark-bg-dark-2">
-                            {% comment %} <a href="{% url "profile" %}" class="d-flex items-center text-17 lh-1 fw-500 -dark-text-white"> {% endcomment %}
+                            <a href="#" class="d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
                               <i class="text-20 icon-discovery mr-15"></i>
                               Şəxsi kabinet
                             </a>
@@ -124,7 +123,7 @@
                           </div>
 
                           <div class="sidebar__item ">
-                            <a href="{% url "logout" %}" class="d-flex items-center text-17 lh-1 fw-500 ">
+                            <a href="#" class="d-flex items-center text-17 lh-1 fw-500 ">
                               <i class="text-20 icon-power mr-15"></i>
                               Çıxış
                             </a>
@@ -135,7 +134,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> {% endcomment %}
               </div>
             </div>
           </div>
@@ -152,9 +151,9 @@
 
               {% url 'dashboard' as dashboard %}
               <div class="sidebar__item -is-active -dark-bg-dark-2">
-                <a href="http://167.99.141.20/" class="d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
+                <a href="http://167.99.141.20/profile/" class="d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
                   <i class="text-20 icon-discovery mr-15"></i>
-                  Dashboard
+                  Profile
                 </a>
               </div>
 
