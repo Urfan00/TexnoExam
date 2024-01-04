@@ -4,16 +4,16 @@ from Account.models import Account, StudentResult
 from Core.models import AccountGroup, RandomQuestion, StudentAnswer
 from .models import Answer, Question
 from django.db.models import F
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 
-class StatusCheckMixin:
-    def dispatch(self, request, *args, **kwargs):
-        user = request.user
-        if not user.status:
-            # Redirect to a page indicating that the account is inactive
-            return redirect('warning')
-        return super().dispatch(request, *args, **kwargs)
+class StatusCheckMixin(UserPassesTestMixin):
+    def test_func(self):
+        return not (self.request.user.is_superuser or self.request.user.is_staff)
+
+    def handle_no_permission(self):
+        return render(self.request, '404.html')
 
 
 class RuleView(StatusCheckMixin, ListView):
@@ -106,7 +106,7 @@ class QuizView(StatusCheckMixin, ListView):
         return redirect('exam_result')
 
 
-class ExamResultView(ListView):
+class ExamResultView(StatusCheckMixin, ListView):
     model = StudentResult
     template_name = 'quiz-result.html'
 
