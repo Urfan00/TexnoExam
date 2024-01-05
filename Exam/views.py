@@ -4,26 +4,32 @@ from Account.models import Account, StudentResult
 from Core.models import AccountGroup, RandomQuestion, StudentAnswer
 from .models import Answer, Question
 from django.db.models import F
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import Http404, HttpResponseForbidden
 
 
 
-class StatusCheckMixin:
+class AuthUserStatusMixin:
     def dispatch(self, request, *args, **kwargs):
-        user = request.user
-        if not user.status:
-            # Redirect to a page indicating that the account is inactive
-            return redirect('warning')
-        return super().dispatch(request, *args, **kwargs)
+        # Check if the user is authenticated
+        if request.user.is_authenticated:
+            # Check if the user is not staff or not superuser
+            if not (request.user.is_staff or request.user.is_superuser):
+                # Check if user status is true
+                if request.user.status:
+                    return super().dispatch(request, *args, **kwargs)
+                else:
+                    # User status is false, redirect with a warning
+                    return render(request, '404.html')
+            else:
+                # User is staff or superuser, redirect to 404 page
+                return render(request, '404.html')
+        else:
+            # User is not authenticated, redirect to login page or any other page as needed
+            return redirect('login')  # Change 'login' to the actual login page URL
 
-    # def test_func(self):
-    #     return not (self.request.user.is_superuser or self.request.user.is_staff)
-
-    # def handle_no_permission(self):
-    #     return render(self.request, '404.html')
 
 
-class RuleView(StatusCheckMixin, ListView):
+class RuleView(AuthUserStatusMixin, ListView):
     model = Account
     template_name = 'quiz-rule.html'
 
@@ -50,7 +56,7 @@ class RuleView(StatusCheckMixin, ListView):
         return context
 
 
-class QuizView(StatusCheckMixin, ListView):
+class QuizView(AuthUserStatusMixin, ListView):
     model = RandomQuestion
     template_name = 'dshb-quiz.html'
 
@@ -116,7 +122,7 @@ class QuizView(StatusCheckMixin, ListView):
         return redirect('exam_result')
 
 
-class ExamResultView(StatusCheckMixin, ListView):
+class ExamResultView(AuthUserStatusMixin, ListView):
     model = StudentResult
     template_name = 'quiz-result.html'
 

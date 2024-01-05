@@ -4,16 +4,24 @@ from .models import Group
 from django.views import View
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import Http404
 
 
 
-class SuperuserRequiredMixin(UserPassesTestMixin):
-    def test_func(self):
-        return self.request.user.is_superuser
+class AuthStaffSuperuserMixin:
+    def dispatch(self, request, *args, **kwargs):
+        # Check if the user is authenticated
+        if request.user.is_authenticated:
+            # Check if the user is staff or superuser
+            if request.user.is_staff or request.user.is_superuser:
+                return super().dispatch(request, *args, **kwargs)
+            else:
+                # User is authenticated but not staff or superuser, redirect to 404 page
+                return render(request, '404.html')
+        else:
+            # User is not authenticated, redirect to login page or any other page as needed
+            return redirect('login')  # Change 'login' to the actual login page URL
 
-    def handle_no_permission(self):
-        return render(self.request, '404.html')
 
 
 class SaveExamView(View):
@@ -59,7 +67,7 @@ class SaveExamView(View):
             return JsonResponse({'status': 'error', 'message': 'Group ID not provided'})
 
 
-class ExamStart(SuperuserRequiredMixin, ListView):
+class ExamStart(AuthStaffSuperuserMixin, ListView):
     model = Group
     template_name = 'dshb-forums.html'
 
@@ -67,3 +75,7 @@ class ExamStart(SuperuserRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["groups"] = Group.objects.filter(is_active=True).all()
         return context
+
+
+def handler_not_found(request, exception):
+    return render(request, '404.html')
