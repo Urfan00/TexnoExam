@@ -4,7 +4,6 @@ from Account.models import Account, StudentResult
 from Core.models import AccountGroup, RandomQuestion, StudentAnswer
 from .models import Answer, Question
 from django.db.models import F
-from django.http import Http404, HttpResponseForbidden
 
 
 
@@ -19,14 +18,13 @@ class AuthUserStatusMixin:
                     return super().dispatch(request, *args, **kwargs)
                 else:
                     # User status is false, redirect with a warning
-                    return render(request, '404.html')
+                    return redirect('exam_result')
             else:
                 # User is staff or superuser, redirect to 404 page
                 return render(request, '404.html')
         else:
             # User is not authenticated, redirect to login page or any other page as needed
             return redirect('login')  # Change 'login' to the actual login page URL
-
 
 
 class RuleView(AuthUserStatusMixin, ListView):
@@ -122,7 +120,7 @@ class QuizView(AuthUserStatusMixin, ListView):
         return redirect('exam_result')
 
 
-class ExamResultView(AuthUserStatusMixin, ListView):
+class ExamResultView(ListView):
     model = StudentResult
     template_name = 'quiz-result.html'
 

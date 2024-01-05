@@ -13,7 +13,7 @@
             </div>
 
             <div class="py-30 px-30">
-              <form method="post">
+              <form id="quiz_form" method="post">
                 {% csrf_token %}
 
                 {% for question in student_questions.point_1_question.all %}
@@ -279,21 +279,10 @@
 
 
 <script>
-
-  {% comment %} setInterval(function() {
-      var date = new Date();
-      $('#clock-wrapper').html(
-        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-      );
-  }, 500); {% endcomment %}
-
-</script>
-
-<script>
-  let urls = 'http://localhost:8000/exam_result/'
+  let urls = '/exam_result/'
   
   var countDownDate = new Date('{{ endTime|date:"D M d Y H:i:s" }}').getTime()
-  
+
   var x = setInterval(function() {
     var now = new Date().getTime(); // Update the current time in each iteration
     
@@ -313,6 +302,9 @@
     document.getElementById("exam_date").innerHTML =  hoursa + ":" + minutesa + ":" + secondsa;
 
     // If the count down is finished, write some text
+    if (distance < 1000) {
+      document.getElementById("quiz_form").submit();
+    }
     if (distance < 0) {
       clearInterval(x);
       window.location.href = urls;

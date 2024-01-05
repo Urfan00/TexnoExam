@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
 from django.views.generic import ListView
-from .models import Group
+from Account.models import StudentResult
+from .models import Group, RandomQuestion
 from django.views import View
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.http import Http404
+from django.utils import timezone
 
 
 
@@ -39,13 +40,23 @@ class SaveExamView(View):
 
             # Extract and update course_topics
             course_topics = request.POST.getlist('states[]')
-            if course_topics:
-                group.course_topic.set(course_topics)
+            group.course_topic.set(course_topics)
 
             # Check if the checkbox is checked
             start_end_checkbox = request.POST.get('startEnd')
             if start_end_checkbox == 'on':
                 group.is_checked=True
+
+                tt = RandomQuestion.objects.filter(student__student_group__group=group).all()
+                for t in tt:
+                    t.status=False
+                    t.save()
+                
+                ww = StudentResult.objects.filter(student__student_group__group=group).all()
+                for w in ww:
+                    if w.created_at.day != timezone.now().day:
+                        w.status=False
+                        w.save()
 
                 # Set the status of all students in the group to True
                 for account_group in group.account_group.filter(is_active=True):
