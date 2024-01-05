@@ -93,11 +93,11 @@
                                   <div class="d-flex items-center">
                                     <div class="form-switch pr-10">
                                       <div class="switch" data-switch=".js-switch-content">
-                                        <input name="startEnd" type="checkbox">
+                                        <input name="startEnd" type="checkbox" {% if group.is_checked %}checked{% endif %}>
                                         <span class="switch__slider"></span>
                                       </div>
                                     </div>
-                                    <div class="icon-bin"></div>
+                                    {% comment %} <div class="icon-bin"></div> {% endcomment %}
                                   </div>
                                 </div>
                               </div>
@@ -172,7 +172,5 @@
         });
     });
 </script>
-
-
 
 {% endblock %}

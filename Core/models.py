@@ -2,7 +2,7 @@ from django.db import models
 from Account.models import Account
 from Exam.models import Answer, Course, CourseTopic, Question
 from services.mixins import DateMixin
-
+from django.utils import timezone
 
 
 class Group(DateMixin):
@@ -11,9 +11,16 @@ class Group(DateMixin):
     course_topic = models.ManyToManyField(CourseTopic, blank=True)
     is_active = models.BooleanField(default=True)
     exam_durations = models.PositiveIntegerField(default=0)
+    is_checked = models.BooleanField(default=False)
+    end_time = models.DateTimeField()
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.exam_durations:
+            self.end_time = timezone.now() + timezone.timedelta(minutes=self.exam_durations)
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Group'

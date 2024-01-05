@@ -8,12 +8,19 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 
-class StatusCheckMixin(UserPassesTestMixin):
-    def test_func(self):
-        return not (self.request.user.is_superuser or self.request.user.is_staff)
+class StatusCheckMixin:
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if not user.status:
+            # Redirect to a page indicating that the account is inactive
+            return redirect('warning')
+        return super().dispatch(request, *args, **kwargs)
 
-    def handle_no_permission(self):
-        return render(self.request, '404.html')
+    # def test_func(self):
+    #     return not (self.request.user.is_superuser or self.request.user.is_staff)
+
+    # def handle_no_permission(self):
+    #     return render(self.request, '404.html')
 
 
 class RuleView(StatusCheckMixin, ListView):
@@ -50,6 +57,9 @@ class QuizView(StatusCheckMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["student_questions"] = RandomQuestion.objects.filter(student=self.request.user, status=True).first()
+        endTime = AccountGroup.objects.filter(student=self.request.user, is_active=True).first()
+        context['endTime'] = endTime.group.end_time
+
         return context
 
     def post(self, request, *args, **kwargs):
