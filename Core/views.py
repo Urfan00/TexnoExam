@@ -6,7 +6,18 @@ from django.views import View
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+
+
+class ProfileView(LoginRequiredMixin, ListView):
+    model = StudentResult
+    template_name = 'dshb-profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["results"] = StudentResult.objects.filter(student=self.request.user).all()
+        return context
 
 
 class AuthStaffSuperuserMixin:
@@ -22,7 +33,6 @@ class AuthStaffSuperuserMixin:
         else:
             # User is not authenticated, redirect to login page or any other page as needed
             return redirect('login')  # Change 'login' to the actual login page URL
-
 
 
 class SaveExamView(View):

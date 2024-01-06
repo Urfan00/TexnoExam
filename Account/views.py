@@ -19,7 +19,7 @@ class LogInView(LoginView, UserPassesTestMixin):
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('index')
+            return redirect('profile')
         return super().get(request, *args, **kwargs)
 
     def test_func(self):
@@ -30,10 +30,10 @@ class LogInView(LoginView, UserPassesTestMixin):
             if hasattr(self.request.user, 'first_time_login') and self.request.user.first_time_login:
                 return reverse_lazy('change_password')
             else:
-                return reverse_lazy('index')
+                return reverse_lazy('profile')
         elif self.request.user.is_authenticated:
             return reverse_lazy('exam_start')
-        return reverse_lazy('index')
+        return reverse_lazy('profile')
 
 
 

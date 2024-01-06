@@ -150,13 +150,21 @@
             <div class="sidebar -dashboard">
 
               {% url 'dashboard' as dashboard %}
-              <div class="sidebar__item -is-active -dark-bg-dark-2">
-                <a href="http://167.99.141.20/profile/" class="d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
+              <div class="sidebar__item -is-active -dark-bg-dark-2 mb-3">
+                <a href="{% url 'profile' %}" class="d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
                   <i class="text-20 icon-discovery mr-15"></i>
                   Profil
                 </a>
               </div>
 
+              {% if not user.is_superuser or not user.is_staff %}
+                <div class="sidebar__item -is-active -dark-bg-dark-2">
+                  <a href="{% url 'index' %}" class="d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
+                    <i class="text-20 icon-discovery mr-15"></i>
+                    İmtahan qaydaları
+                  </a>
+                </div>
+              {% endif %}
             </div>
 
 
