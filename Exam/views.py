@@ -20,8 +20,11 @@ class AuthUserStatusMixin:
                     # User status is false, redirect with a warning
                     return redirect('exam_result')
             else:
-                # User is staff or superuser, redirect to 404 page
-                return render(request, '404.html')
+                if request.user.is_staff or request.user.is_superuser:
+                    return redirect('exam_start')
+                else:
+                    # User is staff or superuser, redirect to 404 page
+                    return render(request, '404.html')
         else:
             # User is not authenticated, redirect to login page or any other page as needed
             return redirect('login')  # Change 'login' to the actual login page URL

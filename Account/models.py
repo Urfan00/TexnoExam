@@ -18,6 +18,9 @@ class Account(AbstractUser):
     is_delete = models.BooleanField(default=False)
     status = models.BooleanField(default=True)
 
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'FIN']
+
     def __str__(self):
         return self.get_full_name()
 

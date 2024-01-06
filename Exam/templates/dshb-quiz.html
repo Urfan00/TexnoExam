@@ -9,10 +9,9 @@
         <div class="col-xl-9">
           <div class="rounded-16 bg-white -dark-bg-dark-1 shadow-4">
             <div class="d-flex items-center py-20 px-30 border-bottom-light">
-              <h2 class="text-17 lh-1 fw-500">Quiz</h2>
+              <h2 class="text-17 lh-1 fw-500 text-20">İmtahan sualları</h2>
             </div>
-
-            <div class="py-30 px-30">
+             <div class="py-30 px-30">
               <form id="quiz_form" method="post">
                 {% csrf_token %}
 
@@ -22,7 +21,7 @@
 
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
-                        <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter }}</h4>
+                        <h4 class="text-18 lh-1 fw-500 text-white">{{ question.course_topic.topic_title|capfirst }}</h4>
                         {% comment %} <div class="d-flex x-gap-50">
                           <div class="d-flex items-center text-white">
                             <div class="icon-flag mr-10"></div>
@@ -32,11 +31,22 @@
                       </div>
 
                       <div class="d-flex pt-15">
-                        <div class="text-white">{{ question.course_topic.topic_title|capfirst }}</div>
-                        <div class="text-white ml-50">{{ question.point }} ballıq</div>
+                        {% comment %} <div class="text-white">{{ question.course_topic.topic_title|capfirst }}</div> {% endcomment %}
+                        {% comment %} <div class="text-white ml-50">{{ question.point }} ballıq</div> {% endcomment %}
+                        {% if question.point >= 1 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
+                        {% if question.point >= 2 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
+                        {% if question.point >= 3 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
                       </div>
 
-                      <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                      <div class="d-flex text-20 lh-1 text-white mt-15 p">
+                        <div>{{ forloop.counter }}) &nbsp;</div> {{ question.question|safe }}
+                      </div>
                       {% if question.question_image %}
                         <img class="mt-10" src="{{ question.question_image.url }}" alt="">
                       {% endif %}
@@ -70,21 +80,23 @@
 
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
-                        <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter0|add:4 }}</h4>
-                        {% comment %} <div class="d-flex x-gap-50">
-                          <div class="d-flex items-center text-white">
-                            <div class="icon-flag mr-10"></div>
-                            <div>Flag Question</div>
-                          </div>
-                        </div> {% endcomment %}
+                        <h4 class="text-18 lh-1 fw-500 text-white">{{ question.course_topic.topic_title|capfirst }}</h4>
                       </div>
 
                       <div class="d-flex pt-15">
-                        <div class="text-white">{{ question.point }} ballıq</div>
-                        <div class="text-white ml-50">{{ question.course_topic.topic_title|capfirst }}</div>
+                        {% if question.point >= 1 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
+                        {% if question.point >= 2 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
+                        {% if question.point >= 3 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
                       </div>
-
-                      <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                      <div class="d-flex text-20 lh-1 text-white mt-15 p">
+                        <div>{{ forloop.counter0|add:4 }}) &nbsp;</div> {{ question.question|safe }}
+                      </div>
                       {% if question.question_image %}
                         <img class="mt-10" src="{{ question.question_image.url }}" alt="">
                       {% endif %}
@@ -117,21 +129,24 @@
 
                     <div class="py-40 px-40 bg-dark-5">
                       <div class="d-flex justify-between">
-                        <h4 class="text-18 lh-1 fw-500 text-white">Sual {{ forloop.counter0|add:8 }}</h4>
-                        {% comment %} <div class="d-flex x-gap-50">
-                          <div class="d-flex items-center text-white">
-                            <div class="icon-flag mr-10"></div>
-                            <div>Flag Question</div>
-                          </div>
-                        </div> {% endcomment %}
+                        <h4 class="text-18 lh-1 fw-500 text-white">{{ question.course_topic.topic_title|capfirst }}</h4>
                       </div>
 
                       <div class="d-flex pt-15">
-                        <div class="text-white">{{ question.point }} ballıq</div>
-                        <div class="text-white ml-50">{{ question.course_topic.topic_title|capfirst }}</div>
+                        {% if question.point >= 1 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
+                        {% if question.point >= 2 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
+                        {% if question.point >= 3 %}
+                          <div class="icon-star text-9 text-yellow-1"></div>
+                        {% endif %}
                       </div>
 
-                      <div class="text-20 lh-1 text-white mt-15">{{ question.question|safe }}</div>
+                      <div class="d-flex text-20 lh-1 text-white mt-15 p">
+                        <div>{{ forloop.counter0|add:8 }}) &nbsp;</div> {{ question.question|safe }}
+                      </div>
                       {% if question.question_image %}
                         <img class="mt-10" src="{{ question.question_image.url }}" alt="">
                       {% endif %}
@@ -159,7 +174,7 @@
                 {% endfor %}
 
                 <div class="d-flex justify-end">
-                  <button class="button -md -dark-1 text-white -dark-button-white mt-40">Bitir</button>
+                  <button class="button -md -dark-1 text-white -dark-button-white mt-40" onclick="return confirm('İmtahanı bitirmək istədiyinizə əminsiniz?');">Bitir</button>
                 </div>
 
               </form>
@@ -185,25 +200,31 @@
         <div class="col-xl-3 col-lg-3 abc">
           <div class="row y-gap-30">
             <div class="col-12">
-              <div class="pt-20 pb-30 px-30 rounded-16 bg-white -dark-bg-dark-1 shadow-4">
-                <h5 class="text-17 fw-500 mb-30">Quiz Complite</h5>
-
-                <div class="d-flex items-center">
-                  <div class="progress-bar w-1/1">
-                    <div class="progress-bar__bg bg-light-3"></div>
-                    <div class="progress-bar__bar bg-purple-1 w-1/4"></div>
-                  </div>
-
-                  <div class="d-flex y-gap-10 justify-between items-center ml-15">
+              <div class="pt-20 pb-20 px-30 rounded-16 bg-white -dark-bg-dark-1 shadow-4">
+                
+                <style>
+                  #exam_date{
+                    font-size: 40px;
+                  }
+                </style>
+                {% comment %} <div class="d-flex justify-center items-center"> {% endcomment %}
+                  {% comment %} <div class="progress-bar w-1/1"> {% endcomment %}
+                    {% comment %} <div class="progress-bar__bg bg-light-3"></div>
+                    <div class="progress-bar__bar bg-purple-1 w-1/4"></div> {% endcomment %}
+                  {% comment %} </div> {% endcomment %}
+                  <p class="text-center text-20">Bitmə tarixi</p>
+                  <div class="d-flex justify-center items-center ">
                     <div id="exam_date"></div>
+                    
                   </div>
-                </div>
+                  
+                {% comment %} </div> {% endcomment %}
               </div>
             </div>
 
             <div class="col-12">
               <div class="pt-20 pb-30 px-30 rounded-16 bg-white -dark-bg-dark-1 shadow-4">
-                <h5 class="text-17 fw-500 mb-30">Quiz Navigation</h5>
+                <h5 class="text-17 fw-500 mb-30">Suallar</h5>
 
                 <div class="row x-gap-10 y-gap-10">
 
